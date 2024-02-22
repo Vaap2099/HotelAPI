@@ -47,5 +47,38 @@ namespace HotelAPI.Controllers
             await _HotelContext.SaveChangesAsync();
             return Ok(agregarReservacion);
         }
+
+        [HttpPut]
+        [Route("{Id:int}")]
+        public async Task<IActionResult> UpdateHabitacion([FromRoute] int Id, Reservacion updateReservacion)
+        {
+            var reservacion = await _HotelContext.Reservaciones.FindAsync(Id);
+            if (reservacion != null)
+            {
+                reservacion.Id = Id;
+                reservacion.IdCliente = updateReservacion.IdCliente;
+                reservacion.NumeroHabitacion = updateReservacion.NumeroHabitacion;
+                reservacion.FechaInicio = updateReservacion?.FechaInicio;
+                reservacion.FechaFinal = updateReservacion?.FechaFinal;
+                reservacion.NoPersonas = updateReservacion?.NoPersonas;
+                await _HotelContext.SaveChangesAsync();
+                return Ok(reservacion);
+            }
+            return NotFound();
+        }
+
+        [HttpDelete]
+        [Route("{Id:int}")]
+        public async Task<IActionResult> DeleteHabitacion([FromRoute] int Id)
+        {
+            var reservacion = await _HotelContext.Reservaciones.FindAsync(Id);
+            if (reservacion != null)
+            {
+                _HotelContext.Remove(reservacion);
+                _HotelContext.SaveChanges();
+                return Ok(reservacion);
+            }
+            return NotFound();
+        }
     }
 }

@@ -21,8 +21,8 @@ namespace HotelAPI.Controllers
         }
 
         [HttpGet]
-        [Route("{IdCliente}")]
-        public async Task<IActionResult> GetCliente([FromRoute] string IdCliente)
+        [Route("{IdCliente:int}")]
+        public async Task<IActionResult> GetCliente([FromRoute] int IdCliente)
         {
             var cliente = await _HotelContext.Clientes.FindAsync(IdCliente);
             if (cliente == null)
@@ -40,11 +40,44 @@ namespace HotelAPI.Controllers
                 IdCliente = cliente.IdCliente,
                 NombreCliente = cliente.NombreCliente,
                 Telefono = cliente.Telefono,
+                DPI = cliente.DPI,
 
             };
             await _HotelContext.Clientes.AddAsync(agregarcliente);
             await _HotelContext.SaveChangesAsync();
             return Ok(agregarcliente);
         }
+
+        [HttpPut]
+        [Route("{IdCliente:int}")]
+        public async Task<IActionResult> UpdateHabitacion([FromRoute] int IdCliente, Cliente updateCliente)
+        {
+            var cliente = await _HotelContext.Clientes.FindAsync(IdCliente);
+            if (cliente != null)
+            {
+                cliente.IdCliente = updateCliente.IdCliente;
+                cliente.NombreCliente = updateCliente?.NombreCliente;
+                cliente.Telefono = updateCliente?.Telefono;
+                cliente.DPI = updateCliente?.DPI;                
+                await _HotelContext.SaveChangesAsync();
+                return Ok(cliente);
+            }
+            return NotFound();
+        }
+
+        [HttpDelete]
+        [Route("{IdCliente:int}")]
+        public async Task<IActionResult> DeleteHabitacion([FromRoute] int IdCliente)
+        {
+            var cliente = await _HotelContext.Clientes.FindAsync(IdCliente);
+            if (cliente != null)
+            {
+                _HotelContext.Remove(cliente);
+                _HotelContext.SaveChanges();
+                return Ok(cliente);
+            }
+            return NotFound();
+        }
+
     }
 }

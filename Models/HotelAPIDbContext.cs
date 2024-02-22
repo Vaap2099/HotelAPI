@@ -20,8 +20,7 @@ namespace HotelAPI.Models
         {
             modelBuilder.Entity<Cliente>(entity =>
             {
-                entity.HasKey(e => e.IdCliente)
-                    .HasName("PK__Cliente__D59466422700EFF6");
+                entity.HasKey(e => e.IdCliente);
 
                 entity.ToTable("Cliente");
 
@@ -33,6 +32,9 @@ namespace HotelAPI.Models
                 entity.Property(e => e.NombreCliente).HasMaxLength(80);
 
                 entity.Property(e => e.Telefono).HasMaxLength(20);
+
+                entity.Property(e => e.DPI).HasMaxLength(50);
+
             });
 
             modelBuilder.Entity<Habitacion>(entity =>

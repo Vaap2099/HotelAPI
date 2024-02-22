@@ -6,7 +6,7 @@ namespace HotelAPI.Models
     {
         public int Id {  get; set; }   
         public int NumeroHabitacion { get; set; }
-        public string IdCliente { get; set; } = null!;
+        public int IdCliente { get; set; } 
         public DateTime? FechaInicio { get; set; }
         public DateTime? FechaFinal { get; set; }
         public int? NoPersonas { get; set; }

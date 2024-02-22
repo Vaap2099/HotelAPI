@@ -51,7 +51,7 @@ namespace HotelAPI.Controllers
             return Ok(agregarhabitacion);
         }
 
-        [HttpPut("api/habitaciones")]
+        [HttpPut]
         [Route("{NumeroHabitacion:int}")]
         public async Task<IActionResult> UpdateHabitacion([FromRoute] int NumeroHabitacion, Habitacion updateHabitacion)
         {
@@ -72,6 +72,20 @@ namespace HotelAPI.Controllers
                 }
                 habitacion.Suite = updateHabitacion.Suite;
                 await _HotelContext.SaveChangesAsync();
+                return Ok(habitacion);
+            }
+            return NotFound();
+        }
+
+        [HttpDelete]
+        [Route("{NumeroHabitacion:int}")]
+        public async Task<IActionResult> DeleteHabitacion([FromRoute] int NumeroHabitacion)
+        {
+            var habitacion = await _HotelContext.Habitaciones.FindAsync(NumeroHabitacion);
+            if (habitacion != null)
+            {
+                _HotelContext.Remove(habitacion);
+                _HotelContext.SaveChanges();
                 return Ok(habitacion);
             }
             return NotFound();
