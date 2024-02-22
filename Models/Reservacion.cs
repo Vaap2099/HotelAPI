@@ -2,7 +2,6 @@
 
 namespace HotelAPI.Models
 {
-    [Keyless]
     public class Reservacion
     {
         

@@ -9,7 +9,6 @@ namespace HotelAPI.Controllers
     public class Habitaciones : ControllerBase
     {
         
-
         private readonly HotelAPIDbContext _HotelContext;
         public Habitaciones(HotelAPIDbContext context)
         {
@@ -21,6 +20,21 @@ namespace HotelAPI.Controllers
         {
             return Ok(await _HotelContext.Habitaciones.ToListAsync());
         }
+
+        [HttpPost("api")]
+        public async Task<IActionResult> AddHabitacion(Habitacion habitacion)
+        {
+            var agregarhabitacion = new Habitacion()
+            {
+                NumeroHabitacion = habitacion.NumeroHabitacion,
+                Descripcion = habitacion.Descripcion,
+
+            };
+            await dbContext.Contacts.AddAsync(contact);
+            await dbContext.SaveChangesAsync();
+            return Ok(contact);
+        }
+
         //public IActionResult Index()
         //{
         //    return ViewComponent();
