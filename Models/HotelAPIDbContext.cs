@@ -50,7 +50,7 @@ namespace HotelAPI.Models
 
             modelBuilder.Entity<Reservacion>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Id);
 
                 entity.ToTable("Reservacion");
 
